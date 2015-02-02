@@ -1,0 +1,321 @@
+<head>
+<div id="desiredAmount">
+      Desired amount is required
+</div>
+
+<div id="nomineesEnteredDiv">
+    No nominees entered yet
+</div>
+
+<div id="demo"> demo </div>
+
+</head>
+
+
+language="javascript"
+type="text/javascript"
+
+
+
+// output function - BEGIN
+var outputArr = [];
+var outputLine = 0;
+var outputF = function (outputItem) {
+    outputArr [outputLine]=(outputItem);
+    outputLine = outputLine + 1;
+    $("#demo").text(outputArr.join(" - "));
+};
+
+outputF ("To get desired amount do as one of these instructions says: ===========================================================");
+
+// ---- outputfunction END
+
+// --- asking desired amount begin
+var desiredAmount = prompt ("Please enter desired amount");
+
+
+$("#desiredAmount").text("The desired amount is " + desiredAmount);
+// --- asking desired amount - end
+
+var nomineesEntered = [] ;
+
+
+    // TASK - add sort array
+// TASK -  add entered value check - number, more than 0
+
+
+// Recieving nominees - BEGIN
+do {
+   var enteredAmount = prompt ("Please enter desired nominee or press cancel if all nominees has been entered"); 
+    if (enteredAmount == null) {break};
+    nomineesEntered [nomineesEntered.length] = enteredAmount;
+
+///   alert ("do2 " + nomineesEntered);
+    
+    $("#nomineesEnteredDiv").text("You've entered such nominees " + nomineesEntered);
+   
+    } while (enteredAmount != null);
+// Recieving nominees - END
+
+nomineesEntered.sort(function(a, b){return a-b});
+nomineesEntered.reverse();
+
+
+// Testing parameters - BEGIN - should be deleted  
+//var desiredAmount=10 ;
+//var nomineesEntered = [5,2,1] ;
+// Testing parameters - END - should be deleted
+
+//// Declaring FUNCTIONS FOR INTERATIONS - BEGIN
+// Declaring arrays - begin
+var qNom = nomineesEntered.length;
+var iterArr = new Array (qNom);
+var answersArr = new Array (qNom);
+//var iterSum = 0;
+var loadOfAnswersArr = [];
+
+
+for (var i=0;i<qNom;i++){iterArr[i]=0}
+
+var strVal = 0
+strVal = (desiredAmount - desiredAmount % nomineesEntered[0])/ nomineesEntered[0]
+
+//outputF(strVal );
+iterArr[0]= strVal ;// for testing only 
+//outputF ("IA"+iterArr);
+//++// outputF("qNom " +qNom+" iterArr "+iterArr.join(", ")); // for checking purpose
+
+// Declaring arrays - end
+
+//Printing results function BEGIN
+
+//outputF("LOA " +loadOfAnswersArr)
+// parameters for testing funct only - end
+
+var printingResults = function (outputAr) {
+//    outputF("Printing results:");
+
+var outputArrr=[] ;
+var outputArrrPlace = 0;
+
+for (var i=0;i<1;i++) {
+    outputArrr[outputArrrPlace]="You can take ";
+    for (var y=0;y<qNom;y++) {    
+       outputArrr[outputArrrPlace+1]=iterArr[y];                       
+       outputArrr[outputArrrPlace+2]=" of ";
+       outputArrr[outputArrrPlace+3]=nomineesEntered[y];
+       outputArrr[outputArrrPlace+4]=" and ";
+       outputArrrPlace=outputArrrPlace+4;
+    }
+    if (i+1<iterArr.length) {
+        outputArrr[outputArrrPlace]=" or ";
+        outputArrrPlace=outputArrrPlace+1;
+        
+    } else {}
+
+}
+outputArrr.pop();  //cutting last unnecessery "or"
+
+outputF(outputArrr.join(" "));
+outputF("====================================================================== OR");
+ 
+}; //Printing results function END
+
+var loadOfAnswersArr = [];
+
+// lower are TESTING DATA - should be deleted
+//arrNom=[4,2,1];
+//array1 = [1,2,4];
+//array2 = [3,4,5];
+
+//loadOfAnswersArr [0]=array1;
+//loadOfAnswersArr [1]=array2;
+//++// outputF("LOA 11:" + loadOfAnswersArr[1][1]);
+
+//outputF("LOA l:"loadOfAnswersArr.length)
+//printingResults(loadOfAnswersArr); // for checking purpose only
+ 
+//function for saving results - BEGIN
+//++// var noOfAnswers = 2; // for checking purpose only 
+var allAnswers=[]
+var noOfAnswers = 0;
+
+var saveResults = function (arr) {
+//    outputF("before save LOA: "+loadOfAnswersArr +" no "+noOfAnswers+", adding "+arr) 
+    loadOfAnswersArr [noOfAnswers]=iterArr;
+  //  outputF("AA:"+loadOfAnswersArr)
+    noOfAnswers = noOfAnswers + 1;
+    
+};
+
+//function for saving results - END
+//++//lower testing data 
+//saveResults(array1);
+//saveResults(array2);
+//outputF("LOA 4answ: "+loadOfAnswersArr+" LOAend ");
+// testing data end
+
+// stepBack function - BEGIN
+
+var stepBack = function (place) {
+         
+    if (iterArr[place]==0) {
+        if (place==0) {
+                      outputF("END!")
+        } 
+    else {chPl=chPl-1;
+         stepBack(chPl);}
+} else {
+          if (place==qNom-1) {    
+          iterArr[place]=0;
+              if (iterArr[place-1]>0) {
+                  iterArr[place-1]=iterArr[place-1]-1;
+                  iterArr[place]=0
+ //                 outputF("after lowering"+iterArr)
+                  ;
+              } else         
+              {chPl=chPl-1
+              stepBack(chPl)
+  //            outputF ("x2 stepback! IA"+iterArr) 
+              }
+              } else               
+          { //outputF(" pl:"+place);
+  //        outputF (" iterArr:"+iterArr);
+          iterArr[place]=iterArr[place]-1;
+          chPl=place+1; 
+          iterArr[place+1]=1; 
+ //         outputF("chPl"+chPl+iterArr)
+           }
+          }
+          }
+;
+//              if (iterArr[0]===0) {
+//            //no more iterations possible. print results here, full stop
+//        } else 
+//            { iterArr[0]=iterArr[1]-1;
+///            for (var i=1; i<qNom; i++) {
+ //               iterArr[i]=0;
+ //               }
+ //            chPlace=0;
+ //           }
+        
+
+//    else {
+//           chValue=chValue-1;
+//           chPlace=chPlace+1;
+           
+//          }
+//};
+
+// stepBack function - END
+    
+//function for calculating the sum of checked combinations - BEGIN
+
+
+//var pairSum=0;
+var iterSum=0;
+var sumArr = function (arr1,arr2) {
+    var iterSumm =0
+    for (j=0; j<qNom; j++) {
+        pairSum = arr1[j]*arr2[j];
+          iterSumm=iterSumm+pairSum;
+     //++//     outputF("j="+j+" iterSum="+iterSum+ " /// ");
+    
+    }
+    return iterSumm;
+};
+//++// outputF("calcSum");
+
+//function for calculating the sum of checked combinations - END        
+
+
+//++// iterArr =[1,1,0];  //for check purpose only
+//++// outputF("sumArr="+ sumArr(nomineesEntered, iterArr)) ;//for check purpose only
+
+
+
+// Declaring FUNCTIONS FOR INTERATIONS - END
+
+/// ITERATIONS BEGIN
+//var iterArr=new Array ;
+//iterArr=[2,0,0];
+
+var chPl = 0;
+var chVal = 0;
+chVal = iterArr[chPl];
+
+//outputF("Nom: "+nomineesEntered +" iterArr "+iterArr+" chPl = "+chPl+" chVal = "+chVal +" ++++=====================================++++++");
+
+ for (var z=0;z<400;z++) {
+//while ((iterArr[chPl]!=0) || (chPl!=0)) {
+//outputF("========================================")
+     if ((iterArr[chPl]==0) && (chPl==0)) {
+                  outputF("loop END!")
+                  {break}} else {
+        
+     if (sumArr(iterArr,nomineesEntered)==desiredAmount) {
+       //  alert("OK!");
+//            outputF("= "+iterArr);
+         //saveResults (iterArr);
+         printingResults(iterArr);
+      //   outputF ("LOA:"+loadOfAnswersArr)
+  //       outputF("GOT IT! i1:"+iterArr);
+         stepBack(chPl);}
+     else if (sumArr(iterArr,nomineesEntered)<desiredAmount) {
+//          outputF("< "+iterArr);
+          interSum=0
+//          outputF("SA:"+sumArr(iterArr,nomineesEntered))
+          iterArr[chPl]=iterArr[chPl]+1;
+         
+         } else {
+ //         outputF("> "+iterArr);
+  //           outputF("SA:"+sumArr(iterArr,nomineesEntered)+"chPl:"+chPl);
+          stepBack (chPl);
+         }
+}
+ }
+////       outputF("--"+iterArr[chPl])
+//       iterArr[chPl]=chVal+1;
+//     //     for (g=0;g<iterArr.length;g++){
+//         outputF(iterArr[g])}
+//     iterSum=0;
+//        outputF ("iteration_"+(z+1));
+//   } else if (sumArr(iterArr,nomineesEntered)==desiredAmount) {
+//       alert("!")
+//       outputF ("iteration_"+(z+1));
+//       alert("ERE");
+//     saveResults (iterArr);}
+//        stepBack (chPl,chVal);
+//     else {
+//    iterArr[chPl]=chVal+1;
+//     chVal=chVal+1    
+//    iterSum=0}//{stepBack (chPl,chVal);}
+//for (g=0;g<iterArr.length;g++){
+//         outputF(iterArr[g]);}
+//    iterSum=0;
+        
+//outputF("iterArr "+iterArr+" nomineesEntered "+nomineesEntered)
+
+//outputF("Sum "+sumArr(iterArr,nomineesEntered)+" desiredAmount  "+desiredAmount + " ============================================== ") 
+
+
+//outputF(z)
+//}
+
+//iterArr[chPl]=chVal+1;
+//outputF(iterArr)
+
+        
+///if (sumCheck ==desiredAmount) {
+///    answersArr=(
+//outputF("LOA 4answ: "+loadOfAnswersArr+" LOAend ");
+
+//array1 = [1,2,4];
+//array2 = [3,4,5];
+//saveResults (iterArr);
+
+//outputF(loadOfAnswersArr[0])   ;     
+iterSum=0
+//outputF(sumArr(iterArr,nomineesEntered)==desiredAmount);
+//outputF(iterArr(0));
+outputF ("full end");
